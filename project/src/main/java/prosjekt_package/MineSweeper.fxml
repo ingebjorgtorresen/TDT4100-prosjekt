@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="aPane" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prosjekt_package.MineSweeperController">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <GridPane prefHeight="450.0" prefWidth="369.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="476.6666564941406" minHeight="10.0" prefHeight="90.6666488647461" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="539.3333549499512" minHeight="10.0" prefHeight="509.3333511352539" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="500.0">
+                     <children>
+                        <Button fx:id="reset" layoutX="441.0" layoutY="33.0" mnemonicParsing="false" onAction="#initialize" text="Reset" />
+                        <Text fx:id="mines" layoutX="277.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mines:" />
+                        <Text fx:id="flags" layoutX="361.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flags:" />
+                        <ProgressIndicator layoutX="223.0" layoutY="25.0" progress="0.0" />
+                        <Button fx:id="easy" layoutX="1.0" layoutY="1.0" mnemonicParsing="false" onAction="#easy" prefHeight="17.0" prefWidth="39.0" text="Easy" />
+                        <Button fx:id="normal" layoutX="1.0" layoutY="32.0" mnemonicParsing="false" onAction="#medium" text="Normal" />
+                        <Button fx:id="hard" layoutY="64.0" mnemonicParsing="false" onAction="#hard" text="Hard" />
+                        	
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
