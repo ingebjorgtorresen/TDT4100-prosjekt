@@ -13,27 +13,26 @@
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <GridPane prefHeight="450.0" prefWidth="369.0" BorderPane.alignment="CENTER">
+            <GridPane BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="476.6666564941406" minHeight="10.0" prefHeight="90.6666488647461" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="539.3333549499512" minHeight="10.0" prefHeight="509.3333511352539" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="465.9999694824219" minHeight="10.0" prefHeight="107.99999237060547" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="492.66667429606116" minHeight="10.0" prefHeight="492.66667429606116" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Pane prefHeight="200.0" prefWidth="500.0">
+                  <Pane fx:id="board" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                  <Pane fx:id="menu" prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="reset" layoutX="441.0" layoutY="33.0" mnemonicParsing="false" onAction="#initialize" text="Reset" />
-                        <Text fx:id="mines" layoutX="277.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mines:" />
-                        <Text fx:id="flags" layoutX="361.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flags:" />
-                        <Button fx:id="easy" layoutX="14.0" layoutY="2.0" mnemonicParsing="false" onAction="#easy" prefHeight="25.0" prefWidth="55.0" text="Easy" />
-                        <Button fx:id="normal" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#medium" text="Normal" />
-                        <Button fx:id="hard" layoutX="13.0" layoutY="64.0" mnemonicParsing="false" onAction="#hard" prefHeight="25.0" prefWidth="58.0" text="Hard" />
-                        	
+                        <Button fx:id="easy" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#easy" prefHeight="25.0" prefWidth="56.0" text="Easy" />
+                        <Button fx:id="normal" layoutX="21.0" layoutY="41.0" mnemonicParsing="false" onAction="#medium" text="Normal" />
+                        <Button fx:id="hard" layoutX="21.0" layoutY="68.0" mnemonicParsing="false" onAction="#hard" prefHeight="25.0" prefWidth="56.0" text="Hard" />
+                        <Button fx:id="reset" layoutX="420.0" layoutY="41.0" mnemonicParsing="false" onAction="#initialize" text="Reset" />
+                        <Text fx:id="mines" layoutX="141.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mines: " />
+                        <Text fx:id="flags" layoutX="267.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flags: " />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </center>

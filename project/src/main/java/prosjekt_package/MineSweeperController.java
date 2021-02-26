@@ -1,13 +1,11 @@
 package prosjekt_package;
 
 
-import javafx.event.ActionEvent;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -36,15 +34,12 @@ public class MineSweeperController {
 	
 	@FXML private Text flags;
 	@FXML private Text mines;
-	//private ComboBox<String> levels;
 	
 	@FXML int buttonClick = 0;
 	@FXML int flagCount = 0;
 	
 	
 	public void initialize() {
-		//levels.getItems().clear();
-		//levels.getItems().addAll("Easy", "Normal", "Hard");
 		
 		this.buttonClick = 0; 
 		game = new MineSweeper(width, height);
@@ -52,7 +47,7 @@ public class MineSweeperController {
 		game.getNeighbourTiles();
 		
 		
-		this.flagCount = (game.getHeight() * game.getWidth())/20;
+		this.flagCount = (game.getHeight() * game.getWidth())/10;
 		
 		createBoard();
 		drawBoard();
@@ -76,7 +71,7 @@ public class MineSweeperController {
 				button.setId("" + id);
 				button.prefWidthProperty().bind(pane.widthProperty());
 				button.prefHeightProperty().bind(pane.heightProperty());
-				//button.setOnMouseClicked(mouse); //til museklikk
+				button.setOnMouseClicked(mouse); //til museklikk
 				button.setText(null);
 				button.setStyle("-fx-background-radius: 0; -fx-background-color: #ffcccc; -fx-border-color: #000000;"); //FARGER <3
 				button.setDisable(false);
@@ -128,7 +123,8 @@ public class MineSweeperController {
 	public void hard() {
 		this.width = 30;
 		this.height = 16; 
-		aPane.setMinSize(1200, 1000);
+		aPane.setMinHeight(1000);
+		aPane.setMinWidth(1200);
 		initialize();
 	}
 	
