@@ -1,11 +1,16 @@
 package prosjekt_package;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
-public class MineSweeper {
+public class MineSweeper implements Serializable { //implementerer grensesnitt for lagring
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int height;
 	private int width;
 	private Tile[][] board;
