@@ -65,30 +65,30 @@ public class MineSweeperController {
 				pane.setTranslateY(y*30);
 				pane.setPrefHeight(30);
 				pane.setPrefWidth(30);
-				pane.setStyle("-fx-border-color: black; -fx-border-width: 1px;"); //FARGER <3
-				pane.getChildren().add(button);
+				pane.setStyle("-fx-border-color: black; -fx-border-width: 1px;"); //FARGER <3 (kant)
+				pane.getChildren().add(button); //legger til en button til en pane, det er panes som flytter på seg i løkken og brettet
 				
 				button.setId("" + id);
 				button.prefWidthProperty().bind(pane.widthProperty());
 				button.prefHeightProperty().bind(pane.heightProperty());
 				button.setOnMouseClicked(mouse); //til museklikk
 				button.setText(null);
-				button.setStyle("-fx-background-radius: 0; -fx-background-color: #ffcccc; -fx-border-color: #000000;"); //FARGER <3
+				button.setStyle("-fx-background-radius: 0; -fx-background-color: #03fca5; -fx-border-color: #000000;"); //FARGER <3 (tile)
 				button.setDisable(false);
 			
-				board.getChildren().add(button);
+				board.getChildren().add(pane); //legger til pane, som har en button
 			}
 		}	
 		mines.setText("MINES: " + (game.getHeight() * game.getWidth())/10); //skriver antall miner og flagg
 		flags.setText("FLAGS: " + flagCount);
 	}
 	
-	public ImageView setNewImage(String image) {
+	/*public ImageView setNewImage(String image) {
 		ImageView img = new ImageView();	
 		Image img1 = new Image(getClass().getResourceAsStream(image));
 		img.setImage(img1);
 		return img;
-	}
+	}*/
 	
 	private void drawBoard() {
 		System.out.println(aPane.getHeight());
