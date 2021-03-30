@@ -90,7 +90,11 @@ public class Tile {
     	isOpen = true;
     	
     }
+
+	public void setType(char symbol) {
+		type = symbol;
+		//her kan vi få feil ved å ikke sette inn o eller e
+	}
     
-    
-     
+   
 }

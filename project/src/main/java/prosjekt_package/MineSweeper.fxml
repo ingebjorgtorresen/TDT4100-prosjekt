@@ -28,9 +28,11 @@
                         <Button fx:id="easy" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#easy" prefHeight="25.0" prefWidth="56.0" text="Easy" />
                         <Button fx:id="normal" layoutX="21.0" layoutY="41.0" mnemonicParsing="false" onAction="#medium" text="Normal" />
                         <Button fx:id="hard" layoutX="21.0" layoutY="68.0" mnemonicParsing="false" onAction="#hard" prefHeight="25.0" prefWidth="56.0" text="Hard" />
-                        <Button fx:id="reset" layoutX="420.0" layoutY="41.0" mnemonicParsing="false" onAction="#initialize" text="Reset" />
+                        <Button fx:id="reset" layoutX="418.0" layoutY="14.0" mnemonicParsing="false" onAction="#initialize" text="Reset" />
                         <Text fx:id="mines" layoutX="141.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mines: " />
                         <Text fx:id="flags" layoutX="267.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flags: " />
+                        <Button fx:id="save" layoutX="420.0" layoutY="41.0" mnemonicParsing="false" onAction="#saveGame" text="Save" />
+                        <Button fx:id="load" layoutX="419.0" layoutY="68.0" mnemonicParsing="false" onAction="#loadGame" text="Load" />
                      </children>
                   </Pane>
                </children>

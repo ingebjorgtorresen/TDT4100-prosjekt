@@ -108,6 +108,7 @@ public class MineSweeper implements Serializable { //implementerer grensesnitt f
 		return width;
 	}
 	
+	
 	public boolean isBomb(Tile tile) {
 		return tile.getType() == 'o';
 	}

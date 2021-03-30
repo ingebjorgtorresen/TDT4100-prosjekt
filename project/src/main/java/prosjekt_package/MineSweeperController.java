@@ -2,10 +2,13 @@ package prosjekt_package;
 
 
 
+import java.io.FileNotFoundException;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -37,6 +40,12 @@ public class MineSweeperController {
 	
 	@FXML int buttonClick = 0;
 	@FXML int flagCount = 0;
+	
+	@FXML
+    TextField filename;
+    
+    @FXML
+    Text fileNotFoundMessage;
 	
 	
 	public void initialize() {
@@ -121,11 +130,43 @@ public class MineSweeperController {
 	
 	@FXML
 	public void hard() {
-		this.width = 30;
-		this.height = 16; 
-		aPane.setMinHeight(1000);
-		aPane.setMinWidth(1200);
+		this.width = 20;
+		this.height = 20; 
+		aPane.setMinHeight(1400);
+		aPane.setMinWidth(1200); //selv om jeg har prøvd å endre på verdier her, endres ikke vinduet, må evt fikses i SB
 		initialize();
+	}
+	
+	
+	private String getFilename() {
+    	String filename = this.filename.getText();
+    	if (filename.isEmpty()) {
+    		filename = "save_file";
+    	}
+    	return filename;
+    }
+	
+	
+	@FXML
+	public void saveGame() {
+		try {
+    		MineSweeperManager.writeToFile(getFilename(), game);
+    		fileNotFoundMessage.setVisible(false);
+    	} catch (FileNotFoundException e) {
+    		fileNotFoundMessage.setVisible(true);
+    	}
+	}
+	
+	@FXML
+	public void loadGame() {
+		try {
+			game = MineSweeperManager.readFromFile(getFilename());
+    		fileNotFoundMessage.setVisible(false);
+    	} catch (FileNotFoundException e) {
+    		fileNotFoundMessage.setVisible(true);
+		}
+    	createBoard();
+    	drawBoard();
 	}
 	
 	private void buttonClick() {
