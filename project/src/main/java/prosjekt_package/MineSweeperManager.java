@@ -15,17 +15,19 @@ import java.util.Scanner;
 public class MineSweeperManager implements MineSweeperFile {
 	
 	private MineSweeper game;
-	private Tile[][] board; //lagrer game, 
 	
-	
-	public final static String SAVE_FOLDER = "src/prosjekt_package/saves/";
+	public final static String SAVE_FOLDER = "src/ms/saves";
 		
 	public MineSweeperManager(MineSweeper game) {
 		this.game = game;
 	}
+	
+	private static String getFilePath(String filename) {
+		return SAVE_FOLDER + filename + ".txt";
+	}
 
 	@Override
-	public void writeToFile(String filename, MineSweeper game) { //lagre spill
+	public void writeToFile(String filename, MineSweeper game) throws FileNotFoundException { //lagre spill
 		
 		//lagre dataen slik at den er enkel å laste den opp igjen
 		//gå gjennom hver tile, laste ned dataen fra hver tile
@@ -33,6 +35,7 @@ public class MineSweeperManager implements MineSweeperFile {
 		
 	
 		try (PrintWriter writer = new PrintWriter(getFilePath(filename))) {
+			writer.println("MineSweeper");
 			writer.println(game.getWidth());
 			writer.println(game.getHeight());
 			writer.println(game.isGameOver());
@@ -45,20 +48,22 @@ public class MineSweeperManager implements MineSweeperFile {
 			writer.flush(); //sikrer at du blir ferdig
 			writer.close(); //lukker
 			
-		} catch(FileNotFoundException e) {
-			System.out.println("File not found");
-			e.printStackTrace();
-		}
+		} 
 	}
+	
+	
+	/*catch(FileNotFoundException e) {
+		System.out.println("File not found");
+		e.printStackTrace();
+	}*/
 
 
 	@Override
 	public MineSweeper readFromFile(String filename) throws FileNotFoundException { //hente spill
-		
-		
 		try (Scanner scanner = new Scanner(new File(getFilePath(filename)))) {
 			int width = scanner.nextInt();
 			int height = scanner.nextInt();
+			
 			MineSweeper game = new MineSweeper(width, height);
 
 			if (scanner.nextBoolean()) {
@@ -77,9 +82,8 @@ public class MineSweeperManager implements MineSweeperFile {
 					char symbol = board.charAt(y * width + x);
 					game.getTile(x, y).setType(symbol);
 				}
-	
-			return game;
 			}
+			return game;
 		}
 	}
 		
@@ -113,6 +117,5 @@ public class MineSweeperManager implements MineSweeperFile {
 			return;
 		}*/
 
-	private static String getFilePath(String filename) {
-		return SAVE_FOLDER + filename + ".txt";
-	}
+	
+}

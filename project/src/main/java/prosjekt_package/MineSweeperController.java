@@ -23,6 +23,8 @@ public class MineSweeperController {
 	
 	MineSweeper game;
 	
+	private MineSweeperManager mineSweeperManager;
+	
 	@FXML Pane board;
 	private int height = 9;
 	private int width = 9;
@@ -49,7 +51,6 @@ public class MineSweeperController {
 	
 	
 	public void initialize() {
-		
 		this.buttonClick = 0; 
 		game = new MineSweeper(width, height);
 		game.setBombs();
@@ -59,6 +60,8 @@ public class MineSweeperController {
 		
 		createBoard();
 		drawBoard();
+		
+		mineSweeperManager = new MineSweeperManager(game); 
 	}
 	private void createBoard() {
 		board.getChildren().clear();
@@ -149,7 +152,7 @@ public class MineSweeperController {
 	@FXML
 	public void saveGame() {
 		try {
-    		MineSweeperManager.writeToFile(getFilename(), game); //of kode, må fikse slik at det passer
+    		mineSweeperManager.writeToFile(getFilename(), game);
     		fileNotFoundMessage.setVisible(false);
     	} catch (FileNotFoundException e) {
     		fileNotFoundMessage.setVisible(true);
@@ -159,7 +162,7 @@ public class MineSweeperController {
 	@FXML
 	public void loadGame() {
 		try {
-			game = MineSweeperManager.readFromFile(getFilename());
+			game = mineSweeperManager.readFromFile(getFilename());
     		fileNotFoundMessage.setVisible(false);
     	} catch (FileNotFoundException e) {
     		fileNotFoundMessage.setVisible(true);
@@ -262,16 +265,20 @@ public class MineSweeperController {
 				}
 				isGameOver();
 				isGameWon();
-			} else if (mouseButton == MouseButton.SECONDARY) {
+			} else if (mouseButton == MouseButton.SECONDARY) { //her kan det skje feil, med at du kan åpne en flagget knapp --> feilbehandling
 				if (!(button.getText() == null)) {
 					button.setText(null);
 					addFlags();
 					flags.setText("FLAGS: " + flagCount);
+					button.setDisable(false); //gjør det til en knapp igjen
 				} else { 
 					if (getFlags() > 0) {
 						button.setText("F");
 						useFlags();	
 						flags.setText("FLAGS: " + flagCount);
+						button.setDisable(true); //fjerner mulighet for trykking
+						button.setOpacity(0.5);
+						
 					}
 				}
 			}
