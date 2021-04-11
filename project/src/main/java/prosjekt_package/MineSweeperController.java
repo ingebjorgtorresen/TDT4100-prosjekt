@@ -150,7 +150,7 @@ public class MineSweeperController {
 	
 	
 	@FXML
-	public void saveGame() {
+	public void saveGame() throws FileNotFoundException {
 		try {
     		mineSweeperManager.writeToFile(getFilename(), game);
     		fileNotFoundMessage.setVisible(false);

@@ -14,9 +14,13 @@ import java.util.Scanner;
 
 public class MineSweeperManager implements MineSweeperFile {
 	
+	//lagre dataen slik at den er enkel å laste den opp igjen
+	//gå gjennom hver tile, laste ned dataen fra hver tile
+	//må lagre om den er åpnet, bombe eller flagget. 
+	
 	private MineSweeper game;
 	
-	public final static String SAVE_FOLDER = "src/ms/saves";
+	public final static String SAVE_FOLDER = "src/main/java/ms/saves/";
 		
 	public MineSweeperManager(MineSweeper game) {
 		this.game = game;
@@ -28,12 +32,6 @@ public class MineSweeperManager implements MineSweeperFile {
 
 	@Override
 	public void writeToFile(String filename, MineSweeper game) throws FileNotFoundException { //lagre spill
-		
-		//lagre dataen slik at den er enkel å laste den opp igjen
-		//gå gjennom hver tile, laste ned dataen fra hver tile
-		//må lagre om den er åpnet, bombe eller flagget. 
-		
-	
 		try (PrintWriter writer = new PrintWriter(getFilePath(filename))) {
 			writer.println("MineSweeper");
 			writer.println(game.getWidth());
@@ -43,6 +41,7 @@ public class MineSweeperManager implements MineSweeperFile {
 			for (int y = 0; y < game.getHeight(); y++) {
 				for (int x = 0; x < game.getWidth(); x++) {
 					writer.println(x + "," + y + "," + game.getTile(x, y).getType() + "," + game.getTile(x, y).getIsOpen());	
+				//hver tile blir printet ut på egen linje
 				}
 			}
 			writer.flush(); //sikrer at du blir ferdig
@@ -86,36 +85,8 @@ public class MineSweeperManager implements MineSweeperFile {
 			return game;
 		}
 	}
-		
-		
-		
-		
-		
-		/*Scanner scanner = new Scanner(new File(filename));
-		
-		while(scanner.hasNextLine()) {
-			String line = scanner.nextLine();	
-		}
-		scanner.close();*/
-		
-		/*MineSweeper mineSweeper= null;
-		
-		try {
-			FileInputStream fileIn = new FileInputStream(filename); //connection to an actual file, throws filenotfound automatisk
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			mineSweeper = (MineSweeper) in.readObject();
-			in.close();
-			fileIn.close();
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-			return;
-		}
-		catch(ClassNotFoundException c) {
-			System.out.println("Minesweeper class not found");
-			c.printStackTrace();
-			return;
-		}*/
-
 	
+//	public static void main(String[] args) throws FileNotFoundException{
+//		new MineSweeperManager().writeToFile("test");
+//	}
 }
