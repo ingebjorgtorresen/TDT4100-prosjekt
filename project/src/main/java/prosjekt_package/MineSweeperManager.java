@@ -15,19 +15,23 @@ import java.util.Scanner;
 public class MineSweeperManager implements MineSweeperFile {
 	
 	private MineSweeper game;
-	private Tile[][] board;
+	private Tile[][] board; //lagrer game, 
 	
 	
 	public final static String SAVE_FOLDER = "src/prosjekt_package/saves/";
 		
 	public MineSweeperManager(MineSweeper game) {
 		this.game = game;
-		this.board = game.board;
 	}
 
 	@Override
 	public void writeToFile(String filename, MineSweeper game) { //lagre spill
 		
+		//lagre dataen slik at den er enkel å laste den opp igjen
+		//gå gjennom hver tile, laste ned dataen fra hver tile
+		//må lagre om den er åpnet, bombe eller flagget. 
+		
+	
 		try (PrintWriter writer = new PrintWriter(getFilePath(filename))) {
 			writer.println(game.getWidth());
 			writer.println(game.getHeight());
@@ -35,7 +39,7 @@ public class MineSweeperManager implements MineSweeperFile {
 			writer.println(game.isGameWon());
 			for (int y = 0; y < game.getHeight(); y++) {
 				for (int x = 0; x < game.getWidth(); x++) {
-					writer.print(game.getTile(x, y).getType());
+					writer.println(x + "," + y + "," + game.getTile(x, y).getType() + "," + game.getTile(x, y).getIsOpen());	
 				}
 			}
 			writer.flush(); //sikrer at du blir ferdig
@@ -46,55 +50,11 @@ public class MineSweeperManager implements MineSweeperFile {
 			e.printStackTrace();
 		}
 	}
-		
-		
-		
 
-		
-		
-		/*try {
-			PrintWriter writer = new PrintWriter(filename);
-			
-			for (int row = 0; row < board.length; row ++) {
-				for (int col = 0; col < game.board[row].length; col ++) {
-					writer.print(String.valueOf(game.board[row][col]));
-				}
-			}
-			writer.flush(); //sikrer at du blir ferdig
-			writer.close(); //lukker
-		} catch(FileNotFoundException e) {
-			System.out.println("File not found");
-			e.printStackTrace();
-		}/*
-		
-		
-		
-		/*try {
-			PrintWriter writer = new PrintWriter(filename);
-			writer.flush(); //sikrer at du blir ferdig
-			writer.close(); //lukker
-		}
-		catch(FileNotFoundException e) {
-			System.out.println("File not found");
-			e.printStackTrace();
-		}*/
-		
-		/*try { //eneste feil her blir at jeg ikke vet hvordan jeg skal hente nåværende spill...
-			FileOutputStream fileOut = new FileOutputStream(filename); 
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(mineSweeper);
-			out.close();
-			fileOut.flush();
-			fileOut.close();
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}*/
-		
-	}
 
 	@Override
 	public MineSweeper readFromFile(String filename) throws FileNotFoundException { //hente spill
+		
 		
 		try (Scanner scanner = new Scanner(new File(getFilePath(filename)))) {
 			int width = scanner.nextInt();

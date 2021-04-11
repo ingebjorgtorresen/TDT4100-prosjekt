@@ -1,7 +1,5 @@
 package prosjekt_package;
 
-import javafx.scene.text.Text;
-
 public class Tile {
 	
 	private char type = 'e'; //dette tiles, standard er tom. Vi fyller evt. med tall og bomber senere. 
@@ -11,19 +9,18 @@ public class Tile {
 	
 	private boolean isBomb; 
 	
-	private boolean isOpen = false;
-	
 	private int neighbours;
 	
-	private int neighbourBombs;
+	private boolean isOpen;
 	
-	//private Text number = new Text();
+	private int neighbourBombs;
 	
 	public Tile (int x, int y, int neighbours) {
 		this.x = x;
 		this.y = y;
 		this.type = 'e';
 		this.neighbours = neighbours;
+		this.isOpen = false;
 		
 	}
 	
@@ -54,6 +51,14 @@ public class Tile {
     	return neighbourBombs;
     }
     
+    public boolean getIsOpen() {
+    	return isOpen;
+    }
+    
+    public void setIsOpen() {
+    	this.isOpen = true;
+    }
+    
     public void setNeighbourBombs(int bombs) {
     	this.neighbourBombs = bombs;
     }
@@ -76,20 +81,18 @@ public class Tile {
     	this.isOpen = tileCondition;
     }*/
     
-    public void openTile() {
+    /*public void openTile() {
     	/*if (isOpen) {
     		return;
-    	} */
+    	} 
     	
     	if (isBomb) {
     		System.out.println("Game over");
     		//scene.set --- sluttside
     		return;
     	}
-    	
-    	isOpen = true;
-    	
-    }
+    	this.isOpen = true;
+    }*/
 
 	public void setType(char symbol) {
 		type = symbol;

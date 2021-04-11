@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.Random;
 
 
-public class MineSweeper implements Serializable { //implementerer grensesnitt for lagring
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class MineSweeper { //implementerer grensesnitt for lagring
+	
+	//validering av klikking på brettet = feilhåndtering, 
+	//skal ikke kunne åpne et flagg
+	
+	
 	private int height;
 	private int width;
-	private Tile[][] board;
+	protected Tile[][] board;
 
     private boolean isGameWon = false;
     private boolean isGameOver = false;
@@ -108,7 +109,6 @@ public class MineSweeper implements Serializable { //implementerer grensesnitt f
 		return width;
 	}
 	
-	
 	public boolean isBomb(Tile tile) {
 		return tile.getType() == 'o';
 	}
@@ -141,6 +141,9 @@ public class MineSweeper implements Serializable { //implementerer grensesnitt f
 		return isGameWon;
 	}
 	
+	public void setIsOpen(int x, int y) {
+		this.board[y][x].setIsOpen();
+	}
 	
 	@Override
 	public String toString() {

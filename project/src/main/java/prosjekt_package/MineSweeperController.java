@@ -55,7 +55,6 @@ public class MineSweeperController {
 		game.setBombs();
 		game.getNeighbourTiles();
 		
-		
 		this.flagCount = (game.getHeight() * game.getWidth())/10;
 		
 		createBoard();
@@ -133,7 +132,7 @@ public class MineSweeperController {
 		this.width = 20;
 		this.height = 20; 
 		aPane.setMinHeight(1400);
-		aPane.setMinWidth(1200); //selv om jeg har prøvd å endre på verdier her, endres ikke vinduet, må evt fikses i SB
+		aPane.setMinWidth(1200); //vinduet blir for lite, med midnre du har 27" skjerm
 		initialize();
 	}
 	
@@ -150,7 +149,7 @@ public class MineSweeperController {
 	@FXML
 	public void saveGame() {
 		try {
-    		MineSweeperManager.writeToFile(getFilename(), game);
+    		MineSweeperManager.writeToFile(getFilename(), game); //of kode, må fikse slik at det passer
     		fileNotFoundMessage.setVisible(false);
     	} catch (FileNotFoundException e) {
     		fileNotFoundMessage.setVisible(true);
@@ -188,6 +187,7 @@ public class MineSweeperController {
 	private int getFlags() {
 		return flagCount;
 	}
+	
 	
 	@FXML
 	public void isGameOver() {
@@ -247,13 +247,15 @@ public class MineSweeperController {
 					button.setDisable(true);
 					button.setText(null);
 					button.setOpacity(0.50);
-					buttonClick();
+					buttonClick();		
+					game.getTile(x, y).setIsOpen();
 				} else {
 					button.setDisable(true);
 					String num = "" + game.getTile(x, y).getNeighbourBombs();
 					button.setText(num);
 					button.setOpacity(1);
 					buttonClick();
+					game.getTile(x, y).setIsOpen();
 				}
 				if (getButtonClick() == game.getWidth() * game.getHeight() - (game.getHeight() * game.getWidth())/10) {
 					game.setGameWon();
