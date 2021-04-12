@@ -43,6 +43,9 @@ public class MineSweeperController {
 	@FXML int buttonClick = 0;
 	@FXML int flagCount = 0;
 	
+	@FXML long start;
+	@FXML long finish;
+	
 	@FXML
     TextField filename;
     
@@ -98,7 +101,7 @@ public class MineSweeperController {
 		Image img1 = new Image(getClass().getResourceAsStream(image));
 		img.setImage(img1);
 		return img;
-	}*/
+	}*/ //hvis vi skal sette in bilder
 	
 	private void drawBoard() {
 		System.out.println(aPane.getHeight());
@@ -213,10 +216,15 @@ public class MineSweeperController {
 	@FXML
 	public void isGameWon() {
 		if(game.isGameWon()) {
+			long finish = System.currentTimeMillis();
+			this.finish = finish;
+			float finalTime = (this.finish - this.start)/1000;
+			
 			Text gameWonText = new Text();
 			HBox textBox = new HBox();
 			textBox.setAlignment(Pos.CENTER);
-			gameWonText.setText("YOU WON");
+			gameWonText.setText("GAME WON \n Time: " + finalTime + "sek");
+			
 			gameWonText.prefHeight(100); 
 			gameWonText.prefWidth(300);
 			gameWonText.setTextAlignment(TextAlignment.CENTER);
@@ -235,7 +243,7 @@ public class MineSweeperController {
 			int x = 0; 
 			int y = 0; 
 			int id = Integer.parseInt(button.getId());
-			if (mouseButton == MouseButton.PRIMARY) {
+			if (mouseButton == MouseButton.PRIMARY) { //venstreklikking
 				for (int i = 0; i < game.getHeight(); i ++) {
 					for (int j = 0; j < game.getWidth(); j++) {
 						if (i * game.getWidth() + j == id) {
@@ -245,12 +253,14 @@ public class MineSweeperController {
 						}
 					}
 				}
+				Tile tile = game.getTile(x, y); //til å evt forenkle koden under
+				
 				if(game.isBomb(game.getTile(x, y))) {
 					button.setDisable(true);
 					button.setOpacity(0.65);
 					button.setText("o");
 					game.setGameOver();
-				} else if (game.getTile(x, y).getNeighbourBombs() == 0) {
+				} else if (game.getTile(x, y).getNeighbourBombs() == 0) { //her kan vi kalle en metode som åpner andre blanke naboer
 					button.setDisable(true);
 					button.setText(null);
 					button.setOpacity(0.50);
@@ -270,11 +280,11 @@ public class MineSweeperController {
 				isGameOver();
 				isGameWon();
 			} else if (mouseButton == MouseButton.SECONDARY) { //her kan det skje feil, med at du kan åpne en flagget knapp --> feilbehandling
-				if (!(button.getText() == null)) {
+				if (!(button.getText() == null)) { //høyreklikking ^
+					button.setDisable(false); //gjør det til en knapp igjen
 					button.setText(null);
 					addFlags();
 					flags.setText("FLAGS: " + flagCount);
-					button.setDisable(false); //gjør det til en knapp igjen
 				} else { 
 					if (getFlags() > 0) {
 						button.setText("F");

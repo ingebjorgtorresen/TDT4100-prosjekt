@@ -92,7 +92,7 @@ public class MineSweeperManager implements MineSweeperFile {
 				
 				if (open == true) {
 					game.getTile(x, y).setIsOpen();
-					Button button = (Button) controller.getBoard().lookup("#" + x + y *width);
+					Button button = (Button) aPane.lookup("#" + x + y *width);
 					button.setDisable(true);
 					//må få til å hente board(pane) fra controller
 					
