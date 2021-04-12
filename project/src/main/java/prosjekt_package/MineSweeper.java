@@ -9,8 +9,8 @@ import java.util.Random;
 public class MineSweeper { //implementerer grensesnitt for lagring
 	
 	//validering av klikking på brettet = feilhåndtering, 
-	//skal ikke kunne åpne et flagg
-	
+	//skal ikke kunne åpne et flagg - dette har jeg fisket ved å deaktivere button når flagg er puttet på
+	//^dette er ikke fikset lol
 	
 	private int height;
 	private int width;
@@ -55,7 +55,6 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		if (0 >= limit) {
 			throw new IllegalArgumentException("Limit must be greater than 0");
 		}
-
 		Random r = new Random();
 		return r.nextInt(limit + 1);
     }
@@ -107,6 +106,11 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 
 	public int getWidth() {
 		return width;
+	}
+	
+
+	public Tile[][] getBoard() {
+		return board;
 	}
 	
 	public boolean isBomb(Tile tile) {
@@ -164,11 +168,11 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		return boardString;
 	}
 	
-	public static void main(String[] args) {
-		MineSweeper game = new MineSweeper(10, 10);
-		game.setBombs();	
-		game.getNeighbourTiles();
-		System.out.println(game);
-	}
+//	public static void main(String[] args) {
+//		MineSweeper game = new MineSweeper(10, 10);
+//		game.setBombs();	
+//		game.getNeighbourTiles();
+//		System.out.println(game);
+//	}
 
 }

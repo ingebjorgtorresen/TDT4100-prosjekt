@@ -49,7 +49,6 @@ public class MineSweeperController {
     @FXML
     Text fileNotFoundMessage;
 	
-	
 	public void initialize() {
 		this.buttonClick = 0; 
 		game = new MineSweeper(width, height);
@@ -191,6 +190,11 @@ public class MineSweeperController {
 		return flagCount;
 	}
 	
+
+	public Pane getBoard() {
+		return board;
+	}
+	
 	
 	@FXML
 	public void isGameOver() {
@@ -271,13 +275,14 @@ public class MineSweeperController {
 					addFlags();
 					flags.setText("FLAGS: " + flagCount);
 					button.setDisable(false); //gjør det til en knapp igjen
-				} else { 
+				} else if(button.isDisabled() == true) {
+					button.setDisable(false);
+				}else { 
 					if (getFlags() > 0) {
 						button.setText("F");
 						useFlags();	
 						flags.setText("FLAGS: " + flagCount);
 						button.setDisable(true); //fjerner mulighet for trykking
-						button.setOpacity(0.5);
 						
 					}
 				}

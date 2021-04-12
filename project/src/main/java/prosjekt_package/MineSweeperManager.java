@@ -10,6 +10,8 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javafx.scene.control.Button;
+
 
 
 public class MineSweeperManager implements MineSweeperFile {
@@ -33,14 +35,14 @@ public class MineSweeperManager implements MineSweeperFile {
 	@Override
 	public void writeToFile(String filename, MineSweeper game) throws FileNotFoundException { //lagre spill
 		try (PrintWriter writer = new PrintWriter(getFilePath(filename))) {
-			writer.println("MineSweeper");
+			//writer.println("MineSweeper");
 			writer.println(game.getWidth());
 			writer.println(game.getHeight());
 			writer.println(game.isGameOver());
 			writer.println(game.isGameWon());
 			for (int y = 0; y < game.getHeight(); y++) {
 				for (int x = 0; x < game.getWidth(); x++) {
-					writer.println(x + "," + y + "," + game.getTile(x, y).getType() + "," + game.getTile(x, y).getIsOpen());	
+					writer.println(x +"," + y + "," + game.getTile(x, y).getType() + "," + game.getTile(x, y).getIsOpen());	
 				//hver tile blir printet ut på egen linje
 				}
 			}
@@ -60,28 +62,44 @@ public class MineSweeperManager implements MineSweeperFile {
 	@Override
 	public MineSweeper readFromFile(String filename) throws FileNotFoundException { //hente spill
 		try (Scanner scanner = new Scanner(new File(getFilePath(filename)))) {
+			
 			int width = scanner.nextInt();
 			int height = scanner.nextInt();
 			
 			MineSweeper game = new MineSweeper(width, height);
+			MineSweeperController controller = new MineSweeperController();
 
 			if (scanner.nextBoolean()) {
 				game.setGameOver();
 			}
-
 			if (scanner.nextBoolean()) {
 				game.setGameWon();
 			}
 
 			scanner.nextLine();
-
-			String board = scanner.next();
-			for (int y = 0; y < height; y++) {
-				for (int x = 0; x < width; x++) {
-					char symbol = board.charAt(y * width + x);
-					game.getTile(x, y).setType(symbol);
+			
+			while(scanner.hasNext()) {
+				String tile = scanner.next();
+				String[] info = tile.split(",");
+				
+				int x = Integer.parseInt(info[0]); 
+				int y = Integer.parseInt(info[1]);
+				
+				char symbol = tile.charAt(4);
+				boolean open = Boolean.parseBoolean(info[3]);
+				
+				game.getTile(x, y).setType(symbol);
+				
+				if (open == true) {
+					game.getTile(x, y).setIsOpen();
+					Button button = (Button) controller.getBoard().lookup("#" + x + y *width);
+					button.setDisable(true);
+					//må få til å hente board(pane) fra controller
+					
 				}
+				
 			}
+			
 			return game;
 		}
 	}
