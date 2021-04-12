@@ -3,7 +3,7 @@ package prosjekt_package;
 public class Tile {
 	
 	private char type = 'e'; //dette tiles, standard er tom. Vi fyller evt. med tall og bomber senere. 
-
+	
 	private int x;
 	private int y;
 	
@@ -30,6 +30,10 @@ public class Tile {
 	    
 	public boolean isBomb() {
 		return type == 'o';
+	}
+	
+	public boolean isEmpty() {
+		return type == 'e'; 
 	}
 	
 	public int getX() {
@@ -95,9 +99,13 @@ public class Tile {
     }*/
 
 	public void setType(char symbol) {
+		if("eo".indexOf(symbol) == -1) { //unntak hvis det ikke er gydig tilstand, liste med gylidge tilstand
+			throw new IllegalArgumentException("Not a valid state"); 
+		}
 		type = symbol;
-		//her kan vi få feil ved å ikke sette inn o eller e
 	}
+	
+	
     
    
 }

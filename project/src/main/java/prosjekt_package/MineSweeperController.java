@@ -275,12 +275,10 @@ public class MineSweeperController {
 					addFlags();
 					flags.setText("FLAGS: " + flagCount);
 					button.setDisable(false); //gjør det til en knapp igjen
-				} else if(button.isDisabled() == true) {
-					button.setDisable(false);
-				}else { 
+				} else { 
 					if (getFlags() > 0) {
 						button.setText("F");
-						useFlags();	
+						useFlags();
 						flags.setText("FLAGS: " + flagCount);
 						button.setDisable(true); //fjerner mulighet for trykking
 						
