@@ -107,6 +107,11 @@ public class MineSweeperController {
 		System.out.println(aPane.getHeight());
 		System.out.println(aPane.getWidth());
 		
+		
+		
+		//her kan jeg sjekke om buttons skal være åpne eller ikke
+		//bruk for-løkke og isOpen!
+		
 		/*for (int y = 0; y < game.getHeight(); y++) {
 			for (int x = 0; x < game.getWidth(); x++) {
 				board.getChildren().get(y*game.getWidth() + x).setStyle("-fx-background-color: "+ getTileColor(game.getTile(x,  y)) + ";");	
@@ -171,6 +176,15 @@ public class MineSweeperController {
 		}
     	createBoard();
     	drawBoard();
+    	
+    	for (int y = 0; y < game.getHeight(); y++) { 
+			for (int x = 0; x < game.getWidth(); x++) {
+				if(game.getTile(x, y).getIsOpen() == true) {
+					Button button = (Button) aPane.lookup("#" + y + x *game.getWidth());
+					button.setDisable(true);
+				}
+			}
+		}
 	}
 	
 	private void buttonClick() {
