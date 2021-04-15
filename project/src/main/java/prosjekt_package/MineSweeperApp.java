@@ -10,7 +10,7 @@ public class MineSweeperApp extends Application {
 	public void start(final Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Mine Sweeper");
 		primaryStage.setScene(new Scene(FXMLLoader.load(MineSweeperApp.class.getResource("MineSweeper.fxml"))));
-		primaryStage.setMaximized(true);
+		primaryStage.setMaximized(false);
 		primaryStage.show();
 	}
 

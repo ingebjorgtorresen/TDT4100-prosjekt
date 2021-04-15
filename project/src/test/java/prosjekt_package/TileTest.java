@@ -1,4 +1,4 @@
-package test;
+package prosjekt_package;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +8,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import prosjekt_package.Tile;
 
 public class TileTest {
+	
+	//Unntakshåndtering:
+			//MineSweeperManager:
+			//Unntakshåndtering når man leser og skriver fra fil - sendes til kontrolløren
+		
+			//MineSweeper:
+			//getRandom() har unntsak hvis talllet ikke er større en 0
+			//getTile() har unntak hvis tile er utenfor brett
+		
+			//Tile
+			//setType() har unntak hvis type ikke er gyldig verdi. 
 	
 	private Tile tile;
 	

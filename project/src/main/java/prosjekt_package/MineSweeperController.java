@@ -4,6 +4,7 @@ package prosjekt_package;
 
 import java.io.FileNotFoundException;
 
+import app.Tiles;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -26,8 +27,8 @@ public class MineSweeperController {
 	private MineSweeperManager mineSweeperManager;
 	
 	@FXML Pane board;
-	private int height = 9;
-	private int width = 9;
+	private int height = 10;
+	private int width = 10;
 	
 	@FXML AnchorPane aPane;
 	
@@ -61,7 +62,6 @@ public class MineSweeperController {
 		this.flagCount = (game.getHeight() * game.getWidth())/10;
 		
 		createBoard();
-		drawBoard();
 		
 		mineSweeperManager = new MineSweeperManager(game); 
 	}
@@ -96,28 +96,13 @@ public class MineSweeperController {
 		flags.setText("FLAGS: " + flagCount);
 	}
 	
-	/*public ImageView setNewImage(String image) {
+	public ImageView setNewImage(String image) {
 		ImageView img = new ImageView();	
 		Image img1 = new Image(getClass().getResourceAsStream(image));
 		img.setImage(img1);
 		return img;
-	}*/ //hvis vi skal sette in bilder
+	} //setter inn bilder
 	
-	private void drawBoard() {
-		System.out.println(aPane.getHeight());
-		System.out.println(aPane.getWidth());
-		
-		
-		
-		//her kan jeg sjekke om buttons skal være åpne eller ikke
-		//bruk for-løkke og isOpen!
-		
-		/*for (int y = 0; y < game.getHeight(); y++) {
-			for (int x = 0; x < game.getWidth(); x++) {
-				board.getChildren().get(y*game.getWidth() + x).setStyle("-fx-background-color: "+ getTileColor(game.getTile(x,  y)) + ";");	
-			}
-		}*/
-	}
 	
 	@FXML
 	public void easy() {
@@ -162,7 +147,7 @@ public class MineSweeperController {
     		mineSweeperManager.writeToFile(getFilename(), game);
     		fileNotFoundMessage.setVisible(false);
     	} catch (FileNotFoundException e) {
-    		fileNotFoundMessage.setVisible(true);
+    		fileNotFoundMessage.setVisible(true); //har ikke lagd hvis filen finnes fra før og man prøver å lagre på samme navn
     	}
 	}
 	
@@ -175,13 +160,30 @@ public class MineSweeperController {
     		fileNotFoundMessage.setVisible(true);
 		}
     	createBoard();
-    	drawBoard();
     	
-    	for (int y = 0; y < game.getHeight(); y++) { 
+    	for (int y = 0; y < game.getHeight(); y++) { //åpner knappene som er åpnet basert på info fra fil
 			for (int x = 0; x < game.getWidth(); x++) {
-				if(game.getTile(x, y).getIsOpen() == true) {
-					Button button = (Button) aPane.lookup("#" + y + x *game.getWidth());
+				
+				int id = x + y * game.getWidth();
+				Button button = (Button) aPane.lookup("#" + id);
+				
+				if(game.getTile(x, y).getIsOpen() && game.getTile(x, y).getNeighbourBombs() != 0){
+					String num = "" + game.getTile(x, y).getNeighbourBombs();
+					button.setText(num);
+					button.setOpacity(1);
 					button.setDisable(true);
+				}
+				else if(game.getTile(x, y).getIsOpen()) {
+					button.setDisable(true);
+				} 
+				
+				if(game.getTile(x, y).getIsFlagged()) {
+					Image flag_icon = new Image(getClass().getResourceAsStream("flag_icon.png"), 20, 20, false, false);
+					button.setText("F");
+					button.setOpacity(1);
+					button.setGraphic(new ImageView(flag_icon));
+					useFlags();
+					flags.setText("FLAGS: " + flagCount);
 				}
 			}
 		}
@@ -189,6 +191,10 @@ public class MineSweeperController {
 	
 	private void buttonClick() {
 		this.buttonClick += 1;
+		if (buttonClick == 1) {
+			long start = System.currentTimeMillis();
+			this.start = start;
+		}
 	}
 	
 	private int getButtonClick() {
@@ -212,6 +218,23 @@ public class MineSweeperController {
 		return board;
 	}
 	
+	public void showBombs() {
+		for (int y = 0; y < game.getHeight(); y++) { //finner minene og setter visible
+			for (int x = 0; x < game.getWidth(); x++) {
+				int id =  x + y * game.getWidth();
+				Button button = (Button) aPane.lookup("#" + id); 
+				
+				if(game.getTile(x, y).isBomb() == true) {
+					Image bomb = new Image(getClass().getResourceAsStream("mine_icon2.png"), 20, 20, false, false);
+					button.setDisable(true);
+					button.setOpacity(0.5);
+					button.setText("o");
+					button.setGraphic(new ImageView(bomb));	
+				}
+			}
+		}
+	}
+	
 	
 	@FXML
 	public void isGameOver() {
@@ -221,9 +244,11 @@ public class MineSweeperController {
 			gameOverText.setText("GAME OVER");
 			gameOverText.setStyle("-fx-font-size: 20;");
 			textBox.setAlignment(Pos.CENTER);
-			board.getChildren().clear();
-			board.getChildren().add(textBox);
+			//board.getChildren().clear();
+			board.getChildren().add(textBox); //kan man bestemme hvor man adder den? helst nederst kanskje 
 			textBox.getChildren().add(gameOverText);
+			
+			showBombs();
 		}
 	}
 	
@@ -269,17 +294,26 @@ public class MineSweeperController {
 				}
 				Tile tile = game.getTile(x, y); //til å evt forenkle koden under
 				
-				if(game.isBomb(game.getTile(x, y))) {
+				if(button.getText() == "F") { //sjekker om det er flagg, gjør ingenting hvis du høyreklikker på flagg
+					return;
+				}
+				
+				else if(game.isBomb(game.getTile(x, y))) {
+					Image bomb = new Image(getClass().getResourceAsStream("mine_icon2.png"), 20, 20, false, false);
 					button.setDisable(true);
-					button.setOpacity(0.65);
+					button.setOpacity(0.5);
 					button.setText("o");
+					button.setGraphic(new ImageView(bomb));
 					game.setGameOver();
+					
 				} else if (game.getTile(x, y).getNeighbourBombs() == 0) { //her kan vi kalle en metode som åpner andre blanke naboer
-					button.setDisable(true);
-					button.setText(null);
-					button.setOpacity(0.50);
-					buttonClick();		
-					game.getTile(x, y).setIsOpen();
+//					button.setDisable(true);
+//					button.setText(null);
+//					button.setOpacity(0.50);
+//					buttonClick();		
+//					game.getTile(x, y).setIsOpen();
+					disableEmptyTiles(game.getTile(x,y));
+					
 				} else {
 					button.setDisable(true);
 					String num = "" + game.getTile(x, y).getNeighbourBombs();
@@ -293,18 +327,26 @@ public class MineSweeperController {
 				}
 				isGameOver();
 				isGameWon();
-			} else if (mouseButton == MouseButton.SECONDARY) { //her kan det skje feil, med at du kan åpne en flagget knapp --> feilbehandling
-				if (!(button.getText() == null)) { //høyreklikking ^
-					button.setDisable(false); //gjør det til en knapp igjen
+			} else if (mouseButton == MouseButton.SECONDARY) { 
+				
+				if (!(button.getText() == null)) { //fjerner flagg
+					button.setOpacity(1); //høyreklikking ^
 					button.setText(null);
+					button.setGraphic(null);
 					addFlags();
 					flags.setText("FLAGS: " + flagCount);
+					game.getTile(x, y).setIsFlagged(false);
+					System.out.println(game.getTile(x, y).getIsFlagged());
 				} else { 
-					if (getFlags() > 0) {
+					if (getFlags() > 0) { //flagger hvis du har igjen
+						Image flag_icon = new Image(getClass().getResourceAsStream("flag_icon.png"), 20, 20, false, false);
 						button.setText("F");
+						button.setOpacity(1);
+						button.setGraphic(new ImageView(flag_icon));
 						useFlags();
 						flags.setText("FLAGS: " + flagCount);
-						button.setDisable(true); //fjerner mulighet for trykking
+						game.getTile(x, y).setIsFlagged(true);
+						System.out.println(game.getTile(x, y).getIsFlagged());
 						
 					}
 				}
@@ -312,4 +354,37 @@ public class MineSweeperController {
 		}
 	};
 	
+	public void disableEmptyTiles(Tile tile) { 
+		tile.setPress();
+		int x = tile.getX();
+		int y = tile.getY();
+		
+		int id =  x + y * game.getWidth();
+		Button button = (Button) aPane.lookup("#" + id); 
+		button.setDisable(true);
+		button.setText(null);
+		button.setOpacity(0.50);
+		buttonClick();
+		game.getTile(x, y).setIsOpen();
+		
+		for (int z = y-1; z <= y+1; z++) {
+			for (int w = x-1; w <= x+1; w++) {
+				
+				int id2 =  w + z * game.getWidth();
+				Button button2 = (Button) aPane.lookup("#" + id2);
+				if (!game.isTile(w,z)) {
+					w++;
+					
+				} else if(button2.getText() == "F") { //hvis flagg, ikke åpne!
+					w++;
+				}
+				else {
+					Tile tile2 = game.getTile(w,z);
+					if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
+						disableEmptyTiles(tile2);
+					}					
+				}
+			}
+		}
+	}
 }

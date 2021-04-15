@@ -7,11 +7,12 @@ public class Tile {
 	private int x;
 	private int y;
 	
-	private boolean isBomb; 
 	
 	private int neighbours;
 	
 	private boolean isOpen;
+	
+	private boolean isFlagged;
 	
 	private int neighbourBombs;
 	
@@ -21,7 +22,11 @@ public class Tile {
 		this.type = 'e';
 		this.neighbours = neighbours;
 		this.isOpen = false;
+		this.isFlagged = false;
 		
+	}
+	public void setPress() {
+		type = 't';
 	}
 	
 	public void setBomb() {
@@ -55,12 +60,20 @@ public class Tile {
     	return neighbourBombs;
     }
     
+    public boolean getIsFlagged() {
+    	return isFlagged;
+    }
+    
     public boolean getIsOpen() {
     	return isOpen;
     }
     
     public void setIsOpen() {
     	this.isOpen = true;
+    }
+    
+    public void setIsFlagged(boolean bool) {
+    	this.isFlagged = bool;
     }
     
     public void setNeighbourBombs(int bombs) {
@@ -77,29 +90,9 @@ public class Tile {
     	}
     	return "";
     }
-    
-    
-    
-    
-    /*public void setOpen(boolean tileCondition) {
-    	this.isOpen = tileCondition;
-    }*/
-    
-    /*public void openTile() {
-    	/*if (isOpen) {
-    		return;
-    	} 
-    	
-    	if (isBomb) {
-    		System.out.println("Game over");
-    		//scene.set --- sluttside
-    		return;
-    	}
-    	this.isOpen = true;
-    }*/
 
 	public void setType(char symbol) {
-		if("eo".indexOf(symbol) == -1) { //unntak hvis det ikke er gydig tilstand, liste med gylidge tilstand
+		if("eot".indexOf(symbol) == -1) { //unntak hvis det ikke er gydig tilstand, liste med gylidge tilstand
 			throw new IllegalArgumentException("Not a valid state"); 
 		}
 		type = symbol;

@@ -146,6 +146,12 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		this.board[y][x].setIsOpen();
 	}
 	
+	 public void findEmptyTiles(int x) {
+		 //ta inn tilen du er på, sjekk rundt og kall metoden igjen: rekursjon
+	 }
+	
+	
+	
 	@Override
 	public String toString() {
 		String boardString = "";

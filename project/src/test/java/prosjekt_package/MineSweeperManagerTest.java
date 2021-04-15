@@ -1,4 +1,4 @@
-package test;
+package prosjekt_package;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;

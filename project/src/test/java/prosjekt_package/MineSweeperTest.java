@@ -1,4 +1,4 @@
-package test;
+package prosjekt_package;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,11 +11,11 @@ class MineSweeperTest {
 
 	@BeforeEach
 	public void setup() {
-		createBoard();
+		createBoard(); //denne i controllorer, må fikse
 	}
 	
 	@Test
-	public void testCobstructor() {
+	public void testConstructor() {
 		game = new MineSweeper(9, 9);
 		
 		assertEquals(game.getHeight(), 9);
