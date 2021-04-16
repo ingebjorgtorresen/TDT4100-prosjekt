@@ -1,10 +1,6 @@
 package prosjekt_package;
 
-
-
 import java.io.FileNotFoundException;
-
-import app.Tiles;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -287,6 +283,7 @@ public class MineSweeperController {
 			int x = 0; 
 			int y = 0; 
 			int id = Integer.parseInt(button.getId());
+			
 			if (mouseButton == MouseButton.PRIMARY) { //venstreklikking
 				for (int i = 0; i < game.getHeight(); i ++) {
 					for (int j = 0; j < game.getWidth(); j++) {
@@ -312,11 +309,6 @@ public class MineSweeperController {
 					game.setGameOver();
 					
 				} else if (game.getTile(x, y).getNeighbourBombs() == 0) { //her kan vi kalle en metode som åpner andre blanke naboer
-//					button.setDisable(true);
-//					button.setText(null);
-//					button.setOpacity(0.50);
-//					buttonClick();		
-//					game.getTile(x, y).setIsOpen();
 					disableEmptyTiles(game.getTile(x,y));
 					
 				} else {
@@ -333,7 +325,16 @@ public class MineSweeperController {
 				isGameOver();
 				isGameWon();
 			} else if (mouseButton == MouseButton.SECONDARY) { 
-				
+				for (int i = 0; i < game.getHeight(); i ++) {
+					for (int j = 0; j < game.getWidth(); j++) {
+						if (i * game.getWidth() + j == id) {
+							y = i; 
+							x = j; 
+							break;
+						}
+					}
+				}
+
 				if (!(button.getText() == null)) { //fjerner flagg
 					button.setOpacity(1); //høyreklikking ^
 					button.setText(null);
@@ -342,6 +343,7 @@ public class MineSweeperController {
 					flags.setText("FLAGS: " + flagCount);
 					game.getTile(x, y).setIsFlagged(false);
 					System.out.println(game.getTile(x, y).getIsFlagged());
+					System.out.println(""+ x + y);
 				} else { 
 					if (getFlags() > 0) { //flagger hvis du har igjen
 						Image flag_icon = new Image(getClass().getResourceAsStream("flag_icon.png"), 20, 20, false, false);
@@ -352,6 +354,7 @@ public class MineSweeperController {
 						flags.setText("FLAGS: " + flagCount);
 						game.getTile(x, y).setIsFlagged(true);
 						System.out.println(game.getTile(x, y).getIsFlagged());
+						System.out.println(""+ x + y);
 						
 					}
 				}

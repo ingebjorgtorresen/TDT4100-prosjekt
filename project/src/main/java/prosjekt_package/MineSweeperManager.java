@@ -47,6 +47,7 @@ public class MineSweeperManager implements MineSweeperFile {
 				//sjekke hva som skjer med isFlagged, første tile blir true...
 				}
 			}
+			
 			writer.flush(); //sikrer at du blir ferdig
 			writer.close(); //lukker
 			
