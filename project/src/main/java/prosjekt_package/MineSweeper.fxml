@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="aPane" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prosjekt_package.MineSweeperController">
@@ -26,6 +27,11 @@
                   <Pane fx:id="board" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
                   <Pane fx:id="menu" prefHeight="200.0" prefWidth="200.0">
                      <children>
+                        <Text fx:id="gameOverText" layoutX="179.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Over" visible="false">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
                         <Button fx:id="easy" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#easy" prefHeight="25.0" prefWidth="56.0" text="Easy" />
                         <Button fx:id="normal" layoutX="21.0" layoutY="41.0" mnemonicParsing="false" onAction="#medium" text="Normal" />
                         <Button fx:id="hard" layoutX="21.0" layoutY="68.0" mnemonicParsing="false" onAction="#hard" prefHeight="25.0" prefWidth="56.0" text="Hard" />
@@ -36,7 +42,7 @@
                         <Button fx:id="load" layoutX="389.0" layoutY="81.0" mnemonicParsing="false" onAction="#loadGame" text="Load" />
                         <TextField fx:id="filename" layoutX="389.0" layoutY="33.0" prefHeight="25.0" prefWidth="101.0" promptText="save_file" text="save_file" />
                         <Text layoutX="389.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filename:" />
-                        <Text fx:id="fileNotFoundMessage" fill="RED" layoutX="389.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filen finns ikke" visible="false" />
+                        <Text fx:id="fileNotFoundMessage" fill="RED" layoutX="389.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filen finnes ikke" visible="false" />
                      </children>
                   </Pane>
                </children>

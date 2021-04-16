@@ -35,7 +35,6 @@ public class MineSweeperManager implements MineSweeperFile {
 	@Override
 	public void writeToFile(String filename, MineSweeper game) throws FileNotFoundException { //lagre spill
 		try (PrintWriter writer = new PrintWriter(getFilePath(filename))) {
-			//writer.println("MineSweeper");
 			writer.println(game.getWidth());
 			writer.println(game.getHeight());
 			writer.println(game.isGameOver());
@@ -43,7 +42,7 @@ public class MineSweeperManager implements MineSweeperFile {
 			for (int y = 0; y < game.getHeight(); y++) {
 				for (int x = 0; x < game.getWidth(); x++) {
 					Tile tile = game.getTile(x, y);
-					writer.println(x +"," + y + "," + tile.getType() + "," + tile.getIsOpen() + ","+ tile.getIsFlagged());	
+					writer.println(x +"," + y + "," + tile.getType() + "," + tile.getIsOpen() + "," + game.getTile(x, y).getIsFlagged());
 				//hver tile blir printet ut på egen linje
 				//sjekke hva som skjer med isFlagged, første tile blir true...
 				}

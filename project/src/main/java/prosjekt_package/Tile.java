@@ -61,7 +61,7 @@ public class Tile {
     }
     
     public boolean getIsFlagged() {
-    	return isFlagged;
+    	return this.isFlagged;
     }
     
     public boolean getIsOpen() {

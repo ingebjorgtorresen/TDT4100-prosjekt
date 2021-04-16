@@ -52,6 +52,8 @@ public class MineSweeperController {
     
     @FXML
     Text fileNotFoundMessage;
+    @FXML
+    Text gameOverText;
 	
 	public void initialize() {
 		this.buttonClick = 0; 
@@ -67,6 +69,7 @@ public class MineSweeperController {
 	}
 	private void createBoard() {
 		board.getChildren().clear();
+		gameOverText.setVisible(false);
 		
 		for (int y = 0; y < game.getHeight(); y++) { //bygge brett gjenom for-løkker
 			for (int x = 0; x < game.getWidth(); x++) {
@@ -183,6 +186,7 @@ public class MineSweeperController {
 					button.setOpacity(1);
 					button.setGraphic(new ImageView(flag_icon));
 					useFlags();
+					game.getTile(x, y).setIsFlagged(true);
 					flags.setText("FLAGS: " + flagCount);
 				}
 			}
@@ -192,7 +196,7 @@ public class MineSweeperController {
 	private void buttonClick() {
 		this.buttonClick += 1;
 		if (buttonClick == 1) {
-			long start = System.currentTimeMillis();
+			long start = System.currentTimeMillis(); //starter tid, men haha funker ikke
 			this.start = start;
 		}
 	}
@@ -239,16 +243,17 @@ public class MineSweeperController {
 	@FXML
 	public void isGameOver() {
 		if (game.isGameOver()) {
-			Text gameOverText = new Text();
-			HBox textBox = new HBox();
-			gameOverText.setText("GAME OVER");
-			gameOverText.setStyle("-fx-font-size: 20;");
-			textBox.setAlignment(Pos.CENTER);
-			//board.getChildren().clear();
-			board.getChildren().add(textBox); //kan man bestemme hvor man adder den? helst nederst kanskje 
-			textBox.getChildren().add(gameOverText);
-			
 			showBombs();
+			gameOverText.setVisible(true);
+			//må disable alle knappene
+			
+			for (int y = 0; y < game.getHeight(); y++) { //disabler alle knappene til slutt :)
+				for (int x = 0; x < game.getWidth(); x++) {
+					int id = x + y * game.getWidth();
+					Button button = (Button) aPane.lookup("#" + id);
+					button.setDisable(true);
+				}
+			}
 		}
 	}
 	
