@@ -228,7 +228,6 @@ public class MineSweeperController {
 					Image bomb = new Image(getClass().getResourceAsStream("mine_icon2.png"), 20, 20, false, false);
 					button.setDisable(true);
 					button.setOpacity(0.5);
-					button.setText("o");
 					button.setGraphic(new ImageView(bomb));	
 				}
 			}
@@ -294,7 +293,6 @@ public class MineSweeperController {
 						}
 					}
 				}
-				Tile tile = game.getTile(x, y); //til å evt forenkle koden under
 				
 				if(button.getText() == "F") { //sjekker om det er flagg, gjør ingenting hvis du høyreklikker på flagg
 					return;
@@ -304,7 +302,6 @@ public class MineSweeperController {
 					Image bomb = new Image(getClass().getResourceAsStream("mine_icon2.png"), 20, 20, false, false);
 					button.setDisable(true);
 					button.setOpacity(0.5);
-					button.setText("o");
 					button.setGraphic(new ImageView(bomb));
 					game.setGameOver();
 					
