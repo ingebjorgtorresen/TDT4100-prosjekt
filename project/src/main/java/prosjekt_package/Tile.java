@@ -17,6 +17,9 @@ public class Tile {
 	private int neighbourBombs;
 	
 	public Tile (int x, int y, int neighbours) {
+		validateNumber(x);
+		validateNumber(y);
+		
 		this.x = x;
 		this.y = y;
 		this.type = 'e';
@@ -25,6 +28,14 @@ public class Tile {
 		this.isFlagged = false;
 		
 	}
+	
+	public boolean validateNumber(int number) {
+		if (number < 0) {
+			throw new IllegalArgumentException("Number can't be negative");
+		}
+		return true;
+	}
+	
 	public void setPress() {
 		type = 't';
 	}
@@ -77,6 +88,7 @@ public class Tile {
     }
     
     public void setNeighbourBombs(int bombs) {
+    	validateNumber(bombs);
     	this.neighbourBombs = bombs;
     }
     

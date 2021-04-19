@@ -224,12 +224,18 @@ public class MineSweeperController {
 				int id =  x + y * game.getWidth();
 				Button button = (Button) aPane.lookup("#" + id); 
 				
-				if(game.getTile(x, y).isBomb() == true) {
+				if(game.getTile(x, y).getIsFlagged() == true && game.getTile(x, y).isBomb() == true) {
+					
+				}
+				
+				else if(game.getTile(x, y).isBomb() == true) {
 					Image bomb = new Image(getClass().getResourceAsStream("mine_icon2.png"), 20, 20, false, false);
 					button.setDisable(true);
 					button.setOpacity(0.5);
 					button.setGraphic(new ImageView(bomb));	
 				}
+				
+				
 			}
 		}
 	}
@@ -339,8 +345,7 @@ public class MineSweeperController {
 					addFlags();
 					flags.setText("FLAGS: " + flagCount);
 					game.getTile(x, y).setIsFlagged(false);
-					System.out.println(game.getTile(x, y).getIsFlagged());
-					System.out.println(""+ x + y);
+					
 				} else { 
 					if (getFlags() > 0) { //flagger hvis du har igjen
 						Image flag_icon = new Image(getClass().getResourceAsStream("flag_icon.png"), 20, 20, false, false);
@@ -350,8 +355,7 @@ public class MineSweeperController {
 						useFlags();
 						flags.setText("FLAGS: " + flagCount);
 						game.getTile(x, y).setIsFlagged(true);
-						System.out.println(game.getTile(x, y).getIsFlagged());
-						System.out.println(""+ x + y);
+						
 						
 					}
 				}
@@ -359,7 +363,7 @@ public class MineSweeperController {
 		}
 	};
 	
-	public void disableEmptyTiles(Tile tile) { 
+	public void disableEmptyTiles(Tile tile) { //denne er nå fikset :)
 		tile.setPress();
 		int x = tile.getX();
 		int y = tile.getY();
@@ -372,23 +376,39 @@ public class MineSweeperController {
 		buttonClick();
 		game.getTile(x, y).setIsOpen();
 		
-		for (int z = y-1; z <= y+1; z++) {
-			for (int w = x-1; w <= x+1; w++) {
+		
+		for(int z = y-1; z <= y+1; z++) {
+			int id2 =  x + z * game.getWidth();
+			Button button2 = (Button) aPane.lookup("#" + id2);
+			if (!game.isTile(x,z)) {
+				z++;
 				
-				int id2 =  w + z * game.getWidth();
-				Button button2 = (Button) aPane.lookup("#" + id2);
-				if (!game.isTile(w,z)) {
-					w++;
-					
-				} else if(button2.getText() == "F") { //hvis flagg, ikke åpne!
-					w++;
-				}
-				else {
-					Tile tile2 = game.getTile(w,z);
-					if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
-						disableEmptyTiles(tile2);
-					}					
-				}
+			} else if(button2.getText() == "F") { //hvis flagg, ikke åpne!
+				z++;
+			}
+			else {
+				Tile tile2 = game.getTile(x,z);
+				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
+					disableEmptyTiles(tile2);
+				}					
+			}
+			
+		}
+		
+		for(int w = x-1; w <= x+1; w++) {
+			int id3 =  w + y * game.getWidth();
+			Button button2 = (Button) aPane.lookup("#" + id3);
+			if (!game.isTile(w,y)) {
+				w++;
+				
+			} else if(button2.getText() == "F") { //hvis flagg, ikke åpne!
+				w++;
+			}
+			else {
+				Tile tile2 = game.getTile(w,y);
+				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
+					disableEmptyTiles(tile2);
+				}					
 			}
 		}
 	}
