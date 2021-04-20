@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import prosjekt_package.MineSweeper;
 
 class MineSweeperTest {
+	
+	//sjekke bombeantallet i tester
 
 	@BeforeEach
 	public void setup() {

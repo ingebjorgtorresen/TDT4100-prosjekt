@@ -30,6 +30,11 @@ public class TileTest {
 	}
 	
 	@Test
+	public void testConstructor() {
+		
+	}
+	
+	@Test
 	public void testSetValidType() {
 		tile.setType('e');
 		assertTrue(tile.isEmpty()); 

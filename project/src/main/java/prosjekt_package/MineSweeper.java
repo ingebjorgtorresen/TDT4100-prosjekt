@@ -5,10 +5,6 @@ import java.util.Random;
 
 public class MineSweeper { //implementerer grensesnitt for lagring
 	
-	//validering av klikking på brettet = feilhåndtering, 
-	//skal ikke kunne åpne et flagg - dette har jeg fisket ved å deaktivere button når flagg er puttet på
-	//^dette er ikke fikset lol
-	
 	private int height;
 	private int width;
 	protected Tile[][] board;
@@ -31,6 +27,7 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 				
 				board[y][x] = new Tile(x, y, neighbours);
 				this.bombNumber = (height*width)/10; //antall bomber, deler på 10 pga int/heltallsdivisjon
+				//her blir det feil?
 			}
 		}
 	}
@@ -110,17 +107,22 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		return board;
 	}
 	
+	public int getBombNumber() {
+		return bombNumber;
+	}
+	
 	public boolean isBomb(Tile tile) {
 		return tile.getType() == 'o';
 	}
 	
 	public void setBombs() {
-		for (int i = 0; i <= bombNumber; i++) {
+		for (int i = bombNumber; i >= 0; i--) {
 			int x = getRandom(getWidth() - 1);
 			int y = getRandom(getHeight() - 1);
 			
-			if (board[y][x].getType() == 'o')
-				i -= 1;
+			if (board[y][x].getType() == 'o') {
+				
+			}
 			
 			board[y][x].setBomb();
 		}
@@ -146,10 +148,6 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		this.board[y][x].setIsOpen();
 	}
 	
-	 public void findEmptyTiles(int x) {
-		 //ta inn tilen du er på, sjekk rundt og kall metoden igjen: rekursjon
-	 }
-	
 	
 	
 	@Override
@@ -171,11 +169,12 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		return boardString;
 	}
 	
-//	public static void main(String[] args) {
-//		MineSweeper game = new MineSweeper(10, 10);
-//		game.setBombs();	
-//		game.getNeighbourTiles();
-//		System.out.println(game);
-//	}
+	public static void main(String[] args) {
+		MineSweeper game = new MineSweeper(10, 10);
+		game.setBombs();	
+		game.getNeighbourTiles();
+		System.out.println(game.getBombNumber());
+		System.out.println(game);
+	}
 
 }
