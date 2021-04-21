@@ -12,7 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 public class MineSweeperManagerTest {
@@ -22,19 +24,21 @@ public class MineSweeperManagerTest {
 	
 	@BeforeEach
 	public void setup() {
-		createBoard();
+		game = new MineSweeper(10, 10);
+		
 	}
 	
 	@Test
 	public void testLoad() {
 		MineSweeper savedGame = game; //required to ignore Eclipse warning
+		
 		try {
 			savedGame = manager.readFromFile("test-saved_file");
 		} catch (FileNotFoundException e ) {
 			fail("Coul not load saved file");
-			return:
+			return;
 		}
-		assertEquals(game.toString(), savedGame.toString())
+		assertEquals(game.toString(), savedGame.toString());
 		assertFalse(game.isGameOver()); //må teste om gave er over eller kan spilles videre/game won
 	}
 	 @Test
@@ -68,7 +72,7 @@ public class MineSweeperManagerTest {
 		 }
 		 
 		 assertNotNull(testFile);
-		 assortNotNull(newFile);
+		 assertNotNull(newFile);
 		 assertTrue(Arrays.equals(testFile, newFile));
 	 }
 	 

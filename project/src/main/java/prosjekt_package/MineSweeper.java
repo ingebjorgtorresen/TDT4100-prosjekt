@@ -16,6 +16,9 @@ public class MineSweeper { //implementerer grensesnitt for lagring
     
     //Konstruktør med brett, som tar inn tomme tiles
     public MineSweeper(int width, int height) {
+    	validateNumber(width);
+    	validateNumber(height);
+    	
 		this.height = height;
 		this.width = width;
 		
@@ -31,6 +34,14 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 			}
 		}
 	}
+    
+    public boolean validateNumber(int number) {
+		if (number < 0) {
+			throw new IllegalArgumentException("Number can't be negative");
+		}
+		return true;
+	}
+    
     
     //Hjelpemetode som tar inn koordinater til Tile, og sjekker om det er innenfor brettet
     public boolean isTile(int x, int y) {
@@ -116,14 +127,13 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 	}
 	
 	public void setBombs() {
-		for (int i = bombNumber; i >= 0; i--) {
+		for (int i = bombNumber; i >= 1; i--) {
 			int x = getRandom(getWidth() - 1);
 			int y = getRandom(getHeight() - 1);
 			
 			if (board[y][x].getType() == 'o') {
-				
+				i++;
 			}
-			
 			board[y][x].setBomb();
 		}
 	}
@@ -169,12 +179,14 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		return boardString;
 	}
 	
-	public static void main(String[] args) {
-		MineSweeper game = new MineSweeper(10, 10);
-		game.setBombs();	
-		game.getNeighbourTiles();
-		System.out.println(game.getBombNumber());
-		System.out.println(game);
-	}
+//	public static void main(String[] args) {
+//		MineSweeper game = new MineSweeper(10, 10);
+//		System.out.println(game);
+//		
+//		game.setBombs();	
+//		game.getNeighbourTiles();
+//		System.out.println(game.getBombNumber());
+//		System.out.println(game);
+//	}
 
 }

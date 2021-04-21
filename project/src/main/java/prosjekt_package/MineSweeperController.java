@@ -156,7 +156,7 @@ public class MineSweeperController {
 			game = mineSweeperManager.readFromFile(getFilename());
     		fileNotFoundMessage.setVisible(false);
     	} catch (FileNotFoundException e) {
-    		fileNotFoundMessage.setVisible(true);
+    		fileNotFoundMessage.setVisible(true); 
 		}
     	createBoard();
     	
@@ -363,7 +363,7 @@ public class MineSweeperController {
 		}
 	};
 	
-	public void disableEmptyTiles(Tile tile) { //denne er nå fikset :)
+	public void disableEmptyTiles(Tile tile) { //denne burde også åpne tiles med tall :)
 		tile.setPress();
 		int x = tile.getX();
 		int y = tile.getY();

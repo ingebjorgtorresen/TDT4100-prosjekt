@@ -19,6 +19,7 @@ public class Tile {
 	public Tile (int x, int y, int neighbours) {
 		validateNumber(x);
 		validateNumber(y);
+		validateNumber(neighbours);
 		
 		this.x = x;
 		this.y = y;
@@ -64,10 +65,10 @@ public class Tile {
     	return type;
     }
     
-    public int getNeighbours() {
+    public int getNeighbours() { //nabo tiles
     	return neighbours;
     }
-    public int getNeighbourBombs() {
+    public int getNeighbourBombs() { //naboer med bomber, finnes i minesweeper
     	return neighbourBombs;
     }
     
