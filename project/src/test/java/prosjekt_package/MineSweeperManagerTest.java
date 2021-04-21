@@ -50,10 +50,15 @@ public class MineSweeperManagerTest {
 	}
 	 @Test
 	 public void testLoadNonExistingFile() {
-		 assertThrows(
-				 FileNotFoundException.class, ()-> game = manager.readFromFile("moo")
-				 , "File not found. Should throw FileNotFoundExeption"
+		 assertThrows(FileNotFoundException.class, ()-> game = manager.readFromFile("moo"),
+				 "File not found. Should throw FileNotFoundExeption"
 				 );
+	 }
+	 
+	 @Test
+	 public void testLoadInvalidFile() {
+		 assertThrows(Exception.class, () -> game = manager.readFromFile("invalid_save"),
+				 "Should throw exception if file is invalid!");
 	 }
 	 
 	 @Test

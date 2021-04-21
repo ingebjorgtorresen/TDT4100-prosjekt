@@ -9,8 +9,6 @@ import prosjekt_package.MineSweeper;
 
 class MineSweeperTest {
 	
-	//sjekke bombeantallet i tester
-	
 	private MineSweeper emptyGame;
 	private MineSweeper game;
 

@@ -28,7 +28,7 @@ public class MineSweeperManager implements MineSweeperFile {
 		this.game = game;
 	}
 	
-	private static String getFilePath(String filename) {
+	protected static String getFilePath(String filename) {
 		return SAVE_FOLDER + filename + ".txt";
 	}
 
