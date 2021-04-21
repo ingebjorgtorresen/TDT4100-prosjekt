@@ -24,28 +24,35 @@ public class MineSweeperManagerTest {
 	
 	@BeforeEach
 	public void setup() {
-		game = new MineSweeper(10, 10);
+		game = new MineSweeper(4, 4);
 		
+		game.board[0][2].setBomb();
+		game.board[1][1].setBomb();
+		game.board[2][0].setBomb();
+		game.board[3][0].setBomb();
+		
+		game.getNeighbourTiles();
 	}
 	
 	@Test
 	public void testLoad() {
-		MineSweeper savedGame = game; //required to ignore Eclipse warning
+		MineSweeper savedGame; 
 		
 		try {
-			savedGame = manager.readFromFile("test-saved_file");
+			savedGame = manager.readFromFile("test_save_file");
 		} catch (FileNotFoundException e ) {
-			fail("Coul not load saved file");
+			fail("Could not load saved file");
 			return;
 		}
-		assertEquals(game.toString(), savedGame.toString());
-		assertFalse(game.isGameOver()); //må teste om gave er over eller kan spilles videre/game won
+		
+		assertEquals(game.toString(), savedGame.toString()); //
+		assertFalse(game.isGameOver()); //må teste om game er over eller kan spilles videre/game won
 	}
 	 @Test
 	 public void testLoadNonExistingFile() {
 		 assertThrows(
 				 FileNotFoundException.class, ()-> game = manager.readFromFile("moo")
-				 , "File not found - should throw FileNotFoundExeption"
+				 , "File not found. Should throw FileNotFoundExeption"
 				 );
 	 }
 	 
@@ -60,7 +67,7 @@ public class MineSweeperManagerTest {
 		 byte[] testFile = null, newFile = null;
 		 
 		 try {
-			 testFile = Files.readAllBytes(Path.of(MineSweeperManager.getFilePath("test-saved_file")));
+			 testFile = Files.readAllBytes(Path.of(MineSweeperManager.getFilePath("test_save_file")));
 		 } catch(IOException e ) {
 			 fail("Could not load test file");
 		 }
