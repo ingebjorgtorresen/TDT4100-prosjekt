@@ -5,6 +5,8 @@ import java.util.Random;
 
 public class MineSweeper { //implementerer grensesnitt for lagring
 	
+	//kan prøve å få åpne tomme celler i MineSweeper
+	
 	private int height;
 	private int width;
 	protected Tile[][] board;
@@ -158,6 +160,43 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		this.board[y][x].setIsOpen();
 	}
 	
+	public void openEmptyTiles(Tile tile) { //kan legge til tallene
+		tile.setPress();
+		int x = tile.getX();
+		int y = tile.getY();
+		
+		tile.setIsOpen();
+		
+		for(int z = y-1; z <= y+1; z++) { //sjekker over og under
+		
+			if (!isTile(x,z)) {
+				z++;
+			}
+			else if (board[z][x].getIsFlagged()==true) { //hvis flagget, ikke åpne
+				z++;
+			}
+			else {
+				Tile tile2 = getTile(x,z);
+				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
+					openEmptyTiles(tile2);
+				}
+			}
+		}
+		for(int w = x-1; w <= x+1; w++) { //sjekker høyre og venstre
+			if (!isTile(y,w)) {
+				w++;
+			}
+			else if (board[y][w].getIsFlagged()==true) {
+				w++;
+			}
+			else {
+				Tile tile2 = getTile(w,y);
+				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
+					openEmptyTiles(tile2);
+				}
+			}
+		}
+	}
 	
 	
 	@Override

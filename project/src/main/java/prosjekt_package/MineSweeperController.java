@@ -178,7 +178,7 @@ public class MineSweeperController {
 				
 				if(game.getTile(x, y).getIsFlagged()) {
 					Image flag_icon = new Image(getClass().getResourceAsStream("flag_icon.png"), 20, 20, false, false);
-					button.setText("F");
+					//button.setText("F");
 					button.setOpacity(1);
 					button.setGraphic(new ImageView(flag_icon));
 					useFlags();
@@ -236,6 +236,19 @@ public class MineSweeperController {
 				}
 				
 				
+			}
+		}
+	}
+	public void checkOpenTiles(Tile tile) { //åpner de tomme tilene på brettet
+		
+		for (int y = 0; y < game.getHeight(); y++) { 
+			for (int x = 0; x < game.getWidth(); x++) {
+				int id = x + y * game.getWidth();
+				Button button = (Button) aPane.lookup("#" + id);
+				
+				if(game.getTile(x, y).getIsOpen()==true) {
+					button.setDisable(true);
+				} 
 			}
 		}
 	}
@@ -300,7 +313,7 @@ public class MineSweeperController {
 					}
 				}
 				
-				if(button.getText() == "F") { //sjekker om det er flagg, gjør ingenting hvis du høyreklikker på flagg
+				if(game.getTile(x, y).getIsFlagged()) { //sjekker om det er flagg, gjør ingenting hvis du høyreklikker på flagg
 					return;
 				}
 				
@@ -312,7 +325,12 @@ public class MineSweeperController {
 					game.setGameOver();
 					
 				} else if (game.getTile(x, y).getNeighbourBombs() == 0) { //her kan vi kalle en metode som åpner andre blanke naboer
-					disableEmptyTiles(game.getTile(x,y));
+					button.setDisable(true);
+					button.setText(null);
+					buttonClick();
+					
+					game.openEmptyTiles(game.getTile(x,y));
+					checkOpenTiles(game.getTile(x,y));
 					
 				} else {
 					button.setDisable(true);
@@ -327,6 +345,7 @@ public class MineSweeperController {
 				}
 				isGameOver();
 				isGameWon();
+				
 			} else if (mouseButton == MouseButton.SECONDARY) { 
 				for (int i = 0; i < game.getHeight(); i ++) {
 					for (int j = 0; j < game.getWidth(); j++) {
@@ -349,7 +368,7 @@ public class MineSweeperController {
 				} else { 
 					if (getFlags() > 0) { //flagger hvis du har igjen
 						Image flag_icon = new Image(getClass().getResourceAsStream("flag_icon.png"), 20, 20, false, false);
-						button.setText("F");
+						//button.setText("F");
 						button.setOpacity(1);
 						button.setGraphic(new ImageView(flag_icon));
 						useFlags();
@@ -361,55 +380,7 @@ public class MineSweeperController {
 				}
 			}
 		}
-	};
+	}; //denne må være her
 	
-	public void disableEmptyTiles(Tile tile) { //denne burde også åpne tiles med tall :)
-		tile.setPress();
-		int x = tile.getX();
-		int y = tile.getY();
-		
-		int id =  x + y * game.getWidth();
-		Button button = (Button) aPane.lookup("#" + id); 
-		button.setDisable(true);
-		button.setText(null);
-		button.setOpacity(0.50);
-		buttonClick();
-		game.getTile(x, y).setIsOpen();
-		
-		
-		for(int z = y-1; z <= y+1; z++) {
-			int id2 =  x + z * game.getWidth();
-			Button button2 = (Button) aPane.lookup("#" + id2);
-			if (!game.isTile(x,z)) {
-				z++;
-				
-			} else if(button2.getText() == "F") { //hvis flagg, ikke åpne!
-				z++;
-			}
-			else {
-				Tile tile2 = game.getTile(x,z);
-				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
-					disableEmptyTiles(tile2);
-				}					
-			}
-			
-		}
-		
-		for(int w = x-1; w <= x+1; w++) {
-			int id3 =  w + y * game.getWidth();
-			Button button2 = (Button) aPane.lookup("#" + id3);
-			if (!game.isTile(w,y)) {
-				w++;
-				
-			} else if(button2.getText() == "F") { //hvis flagg, ikke åpne!
-				w++;
-			}
-			else {
-				Tile tile2 = game.getTile(w,y);
-				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
-					disableEmptyTiles(tile2);
-				}					
-			}
-		}
-	}
+
 }

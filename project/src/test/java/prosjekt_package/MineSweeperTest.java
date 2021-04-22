@@ -27,8 +27,8 @@ class MineSweeperTest {
 		assertThrows(IllegalArgumentException.class, () -> {new MineSweeper(-7, -5);});
 		
 		//tester set-up
-		assertEquals(emptyGame.getHeight(), 0, "Expected height to be 10");
-		assertEquals(emptyGame.getWidth(), 0, "Expected width to be 10");
+		assertEquals(emptyGame.getHeight(), 0, "Expected height to be 0");
+		assertEquals(emptyGame.getWidth(), 0, "Expected width to be 0");
 		
 		//tester et vanlig game
 		assertEquals(game.getHeight(), 10, "Expected height to be 10");
@@ -114,6 +114,11 @@ class MineSweeperTest {
 		//sjekker om åpnet
 		game.board[5][5].setIsOpen();
 		assertTrue(game.board[5][5].getIsOpen(), "This tile should be open");
+	}
+	
+	@Test
+	public void testOpenEmptyTiles(){
+		
 	}
 	
 	@Test
