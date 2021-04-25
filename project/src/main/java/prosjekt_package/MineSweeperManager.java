@@ -80,7 +80,7 @@ public class MineSweeperManager implements MineSweeperFile {
 				int x = Integer.parseInt(info[0]); 
 				int y = Integer.parseInt(info[1]);
 				
-				char symbol = tile.charAt(4);
+				char symbol = info[2].charAt(0);
 				boolean open = Boolean.parseBoolean(info[3]);
 				boolean flagged = Boolean.parseBoolean(info[4]);
 				

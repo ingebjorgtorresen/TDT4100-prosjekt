@@ -118,7 +118,29 @@ class MineSweeperTest {
 	
 	@Test
 	public void testOpenEmptyTiles(){
-		MineSweeper oGame = new MineSweeper(5,5);
+		MineSweeper oGame = new MineSweeper(4,4);
+		oGame.board[0][1].setBomb();
+		oGame.board[0][2].setBomb();
+		oGame.board[1][3].setBomb();
+		oGame.board[3][3].setBomb();
+		
+		oGame.getNeighbourTiles();
+		
+		oGame.openEmptyTiles(oGame.board[3][0]);
+		
+		assertTrue(oGame.board[3][1].getIsOpen(), "Tile should be open");
+		assertTrue(oGame.board[3][2].getIsOpen(), "Tile should be open");
+		
+		assertTrue(oGame.board[2][0].getIsOpen(), "Tile should be open");
+		assertTrue(oGame.board[2][1].getIsOpen(), "Tile should be open");
+		assertTrue(oGame.board[2][2].getIsOpen(), "Tile should be open");
+		
+		assertTrue(oGame.board[1][0].getIsOpen(), "Tile should be open");
+		assertTrue(oGame.board[1][1].getIsOpen(), "Tile should be open");
+		
+		assertFalse(oGame.board[0][0].getIsOpen(), "Tile should not be open");
+		assertFalse(oGame.board[3][3].getIsOpen(), "Tile should not be open"); //dette er en bombe
+		assertFalse(oGame.board[1][2].getIsOpen(), "Tile should not be open"); //diagonal skal ikke åpnes
 		
 		
 		
