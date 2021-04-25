@@ -177,9 +177,14 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 			}
 			else {
 				Tile tile2 = getTile(x,z);
-				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
+				
+				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') { //sjekk heller for type = 'e' enn 0 naboer
 					openEmptyTiles(tile2);
 				}
+				else if(tile2.getType() == 'e') {
+					tile2.setIsOpen();
+				}
+				
 			}
 		}
 		for(int w = x-1; w <= x+1; w++) { //sjekker høyre og venstre
@@ -193,6 +198,9 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 				Tile tile2 = getTile(w,y);
 				if (tile2.getNeighbourBombs() == 0 && tile2.getType() != 't') {
 					openEmptyTiles(tile2);
+				}
+				else if(tile2.getType() == 'e') {
+					tile2.setIsOpen();
 				}
 			}
 		}

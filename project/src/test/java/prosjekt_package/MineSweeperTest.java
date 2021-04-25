@@ -118,6 +118,9 @@ class MineSweeperTest {
 	
 	@Test
 	public void testOpenEmptyTiles(){
+		MineSweeper oGame = new MineSweeper(5,5);
+		
+		
 		
 	}
 	

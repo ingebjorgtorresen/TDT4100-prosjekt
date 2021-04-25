@@ -248,7 +248,16 @@ public class MineSweeperController {
 				
 				if(game.getTile(x, y).getIsOpen()==true) {
 					button.setDisable(true);
-				} 
+					
+					if(game.getTile(x, y).getNeighbourBombs() != 0) {
+						String num = "" + game.getTile(x, y).getNeighbourBombs();
+						button.setDisable(true);
+						button.setText(num);
+						button.setOpacity(1);
+					}
+				}
+					//ha if setning med hvis naboer ikke lik null, sett text. Etter å ha endret koden i logikk
+				 
 			}
 		}
 	}
