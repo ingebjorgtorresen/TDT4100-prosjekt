@@ -81,11 +81,15 @@ public class Tile {
     }
     
     public void setIsOpen() {
-    	this.isOpen = true;
+    	if(this.getIsFlagged()==false) {
+    		this.isOpen = true;
+    	}
     }
     
     public void setIsFlagged(boolean bool) {
-    	this.isFlagged = bool;
+    	if(this.getIsOpen() == false) {
+    		this.isFlagged = bool;
+    	}
     }
     
     public void setNeighbourBombs(int bombs) {

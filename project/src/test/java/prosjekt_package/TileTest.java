@@ -9,18 +9,6 @@ import prosjekt_package.Tile;
 
 public class TileTest {
 	
-	//Unntakshåndtering:
-			//MineSweeperManager:
-			//Unntakshåndtering når man leser og skriver fra fil - sendes til kontrolleren
-		
-			//MineSweeper:
-			//getRandom() har unntsak hvis talllet ikke er større en 0
-			//getTile() har unntak hvis tile er utenfor brett
-		
-			//Tile
-			//setType() har unntak hvis type ikke er gyldig verdi. 
-			//har en validateNumber som sjekker om tallet er negativt, funker i konstruktør og sette naboBomber. 
-	
 	private Tile tile;
 	
 	@BeforeEach
@@ -82,6 +70,9 @@ public class TileTest {
 		assertTrue(tile.getIsFlagged());
 		
 		tile.setIsFlagged(false);
+		assertFalse(tile.getIsFlagged());
+		
+		tile.setIsOpen();
 		assertFalse(tile.getIsFlagged());
 	}
 	

@@ -16,9 +16,8 @@ import javafx.scene.control.Button;
 
 public class MineSweeperManager implements MineSweeperFile {
 	
-	//lagre dataen slik at den er enkel å laste den opp igjen
-	//gå gjennom hver tile, laste ned dataen fra hver tile
-	//må lagre om den er type, om den er åpnet eller flagget. 
+	//går gjennom hver tile, laster ned dataen fra hver tile
+	//lagrer om den er åpnet eller flagget, type og koordinater. 
 	
 	private MineSweeper game;
 	
@@ -44,13 +43,10 @@ public class MineSweeperManager implements MineSweeperFile {
 					Tile tile = game.getTile(x, y);
 					writer.println(x +"," + y + "," + tile.getType() + "," + tile.getIsOpen() + "," + game.getTile(x, y).getIsFlagged());
 				//hver tile blir printet ut på egen linje
-				//sjekke hva som skjer med isFlagged, første tile blir true...
 				}
 			}
-			
 			writer.flush(); //sikrer at du blir ferdig
 			writer.close(); //lukker
-			
 		} 
 	}
 

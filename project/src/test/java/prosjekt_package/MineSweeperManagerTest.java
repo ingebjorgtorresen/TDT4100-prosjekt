@@ -46,19 +46,19 @@ public class MineSweeperManagerTest {
 		}
 		
 		assertEquals(game.toString(), savedGame.toString()); //
-		assertFalse(game.isGameOver()); //må teste om game er over eller kan spilles videre/game won
+		assertFalse(game.isGameOver());
 	}
 	 @Test
 	 public void testLoadNonExistingFile() {
 		 assertThrows(FileNotFoundException.class, ()-> game = manager.readFromFile("moo"),
-				 "File not found. Should throw FileNotFoundExeption"
-				 );
+				 "File not found. Should throw FileNotFoundExeption");
 	 }
+	 
 	 
 	 @Test
 	 public void testLoadInvalidFile() {
 		 assertThrows(Exception.class, () -> game = manager.readFromFile("invalid_save"),
-				 "Should throw exception if file is invalid!");
+				 "Should throw exception if file is invalid!"); //filen kan ikke leses
 	 }
 	 
 	 @Test
@@ -72,7 +72,7 @@ public class MineSweeperManagerTest {
 		 byte[] testFile = null, newFile = null;
 		 
 		 try {
-			 testFile = Files.readAllBytes(Path.of(MineSweeperManager.getFilePath("test_save_file")));
+			 testFile = Files.readAllBytes(Path.of(MineSweeperManager.getFilePath("test_save_file"))); //denne ligger i saves
 		 } catch(IOException e ) {
 			 fail("Could not load test file");
 		 }
@@ -80,12 +80,12 @@ public class MineSweeperManagerTest {
 		 try {
 			 newFile = Files.readAllBytes(Path.of(MineSweeperManager.getFilePath("test-save-new")));
 		 } catch(IOException e ) {
-			 fail("Could not load test file");
+			 fail("Could not load file");
 		 }
 		 
 		 assertNotNull(testFile);
 		 assertNotNull(newFile);
-		 assertTrue(Arrays.equals(testFile, newFile));
+		 assertTrue(Arrays.equals(testFile, newFile)); //sjekker at alt er blitt lagret riktig
 	 }
 	 
 	 @AfterAll //rydde opp etter seg

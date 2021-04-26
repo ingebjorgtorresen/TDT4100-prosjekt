@@ -27,6 +27,7 @@ public class MineSweeperController {
 	@FXML Pane board;
 	private int height = 10;
 	private int width = 10;
+	int bombsFlagged = 0;
 	
 	@FXML AnchorPane aPane;
 	
@@ -42,8 +43,8 @@ public class MineSweeperController {
 	@FXML int buttonClick = 0;
 	@FXML int flagCount = 0;
 	
-	@FXML long start;
-	@FXML long finish;
+	@FXML long start; //tid
+	@FXML long finish; //ferdigtid
 	
 	@FXML
     TextField filename;
@@ -55,6 +56,7 @@ public class MineSweeperController {
 	
 	public void initialize() {
 		this.buttonClick = 0; 
+		this.bombsFlagged = 0;
 		game = new MineSweeper(width, height);
 		game.setBombs();
 		game.getNeighbourTiles();
@@ -128,7 +130,7 @@ public class MineSweeperController {
 		this.width = 20;
 		this.height = 20; 
 		aPane.setMinHeight(1400);
-		aPane.setMinWidth(1200); //vinduet blir for lite, med midnre du har 27" skjerm
+		aPane.setMinWidth(1200); //vinduet blir for lite, med mindre du har 27" skjerm
 		initialize();
 	}
 	
@@ -148,7 +150,7 @@ public class MineSweeperController {
     		mineSweeperManager.writeToFile(getFilename(), game);
     		fileNotFoundMessage.setVisible(false);
     	} catch (FileNotFoundException e) {
-    		fileNotFoundMessage.setVisible(true); //har ikke lagd hvis filen finnes fra før og man prøver å lagre på samme navn
+    		fileNotFoundMessage.setVisible(true); 
     	}
 	}
 	
@@ -160,6 +162,10 @@ public class MineSweeperController {
     	} catch (FileNotFoundException e) {
     		fileNotFoundMessage.setVisible(true); 
 		}
+		
+		this.bombsFlagged = 0;
+		this.buttonClick = 0; 
+		this.flagCount = (game.getHeight() * game.getWidth())/10;
     	createBoard();
     	
     	for (int y = 0; y < game.getHeight(); y++) { //åpner knappene som er åpnet basert på info fra fil
@@ -170,7 +176,6 @@ public class MineSweeperController {
 				if(!game.isTile(x, y)) {
 					x++;
 				}
-				
 				else if(game.getTile(x, y).getIsFlagged()) {
 					Image flag_icon = new Image(getClass().getResourceAsStream("flag_icon.png"), 20, 20, false, false);
 					button.setOpacity(1);
@@ -178,21 +183,23 @@ public class MineSweeperController {
 					useFlags();
 					game.getTile(x, y).setIsFlagged(true);
 					flags.setText("FLAGS: " + flagCount);
+					
+					if(game.getTile(x,y).isBomb() && game.getTile(x, y).getIsFlagged()==true) {
+						bombsFlagged ++;	
+					}
 				}
-				
 				else if(game.getTile(x, y).getIsOpen() && game.getTile(x, y).getNeighbourBombs() != 0){
 					String num = "" + game.getTile(x, y).getNeighbourBombs();
 					button.setText(num);
 					Font font = Font.font("Courier New", FontWeight.BOLD, 12);
 					button.setFont(font);
 					button.setDisable(true);
+					buttonClick();
 				}
 				else if(game.getTile(x, y).getIsOpen()) {
 					button.setDisable(true);
-				} 
-				
-				
-				
+					buttonClick();
+				} 	
 			}
 		}
 	}
@@ -200,7 +207,7 @@ public class MineSweeperController {
 	private void buttonClick() {
 		this.buttonClick += 1;
 		if (buttonClick == 1) {
-			long start = System.currentTimeMillis(); //starter tid, men haha funker ikke
+			long start = System.currentTimeMillis(); //starter tid
 			this.start = start;
 		}
 	}
@@ -210,7 +217,9 @@ public class MineSweeperController {
 	}
 	
 	private void useFlags() {
-		this.flagCount -= 1;
+		if(this.flagCount >= 0) {
+			this.flagCount -= 1;
+		}
 	}
 	
 	private void addFlags() {
@@ -232,9 +241,9 @@ public class MineSweeperController {
 				int id =  x + y * game.getWidth();
 				Button button = (Button) aPane.lookup("#" + id); 
 				
-				if(game.getTile(x, y).getIsFlagged() == true && game.getTile(x, y).isBomb() == true) {
-					
-				}
+//				if(game.getTile(x, y).getIsFlagged() == true && game.getTile(x, y).isBomb() == true) {
+//					
+//				}
 				
 				if(game.getTile(x, y).isBomb() == true) {
 					Image bomb = new Image(getClass().getResourceAsStream("mine_icon2.png"), 20, 20, false, false);
@@ -242,8 +251,6 @@ public class MineSweeperController {
 					button.setOpacity(0.5);
 					button.setGraphic(new ImageView(bomb));	
 				}
-				
-				
 			}
 		}
 	}
@@ -255,15 +262,15 @@ public class MineSweeperController {
 				Button button = (Button) aPane.lookup("#" + id);
 				
 				if(game.getTile(x, y).getNeighbourBombs() != 0 && game.getTile(x, y).getIsOpen()==true) {
+					buttonClick();
 					String num = "" + game.getTile(x, y).getNeighbourBombs();
 					button.setDisable(true);
 					button.setText(num);
-					
 					Font font = Font.font("Courier New", FontWeight.BOLD, 12);
 					button.setFont(font);
-				
 				}
 				else if(game.getTile(x, y).getIsOpen()==true) {
+					buttonClick();
 					button.setDisable(true);
 					button.setOpacity(0.4);
 				}
@@ -283,6 +290,7 @@ public class MineSweeperController {
 					int id = x + y * game.getWidth();
 					Button button = (Button) aPane.lookup("#" + id);
 					button.setDisable(true);
+					button.setOpacity(0.4);
 				}
 			}
 		}
@@ -358,8 +366,9 @@ public class MineSweeperController {
 					button.setFont(font);
 					buttonClick();
 					game.getTile(x, y).setIsOpen();
+					button.setOpacity(0.4);
 				}
-				if (getButtonClick() == game.getWidth() * game.getHeight() - (game.getHeight() * game.getWidth())/10) {
+				if (bombsFlagged == game.getBombNumber()) { //funket før, ikke nå
 					game.setGameWon();
 				}
 				isGameOver();
@@ -376,13 +385,17 @@ public class MineSweeperController {
 					}
 				}
 
-				if (!(button.getText() == null)) { //fjerner flagg
+				if (game.getTile(x,y).getIsFlagged() == true) { //fjerner flagg 
 					button.setOpacity(1); //høyreklikking ^
 					button.setText(null);
 					button.setGraphic(null);
 					addFlags();
 					flags.setText("FLAGS: " + flagCount);
 					game.getTile(x, y).setIsFlagged(false);
+					
+					if(game.getTile(x,y).isBomb()){
+						bombsFlagged --;	
+					}
 					
 				} else { 
 					if (getFlags() > 0) { //flagger hvis du har igjen
@@ -393,12 +406,13 @@ public class MineSweeperController {
 						flags.setText("FLAGS: " + flagCount);
 						game.getTile(x, y).setIsFlagged(true);
 						
-						
+						if(game.getTile(x,y).isBomb() && game.getTile(x, y).getIsFlagged()==true) {
+							bombsFlagged ++;	
+						}
 					}
 				}
 			}
 		}
 	}; //denne må være her
-	
 
 }

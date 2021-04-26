@@ -3,9 +3,7 @@ package prosjekt_package;
 import java.util.Random;
 
 
-public class MineSweeper { //implementerer grensesnitt for lagring
-	
-	//kan prøve å få åpne tomme celler i MineSweeper
+public class MineSweeper { 
 	
 	private int height;
 	private int width;
@@ -32,7 +30,6 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 				
 				board[y][x] = new Tile(x, y, neighbours);
 				this.bombNumber = (height*width)/10; //antall bomber, deler på 10 pga int/heltallsdivisjon
-				//her blir det feil?
 			}
 		}
 	}
@@ -47,7 +44,7 @@ public class MineSweeper { //implementerer grensesnitt for lagring
     
     //Hjelpemetode som tar inn koordinater til Tile, og sjekker om det er innenfor brettet
     public boolean isTile(int x, int y) {
-		return x >= 0 && y >= 0 && x < getWidth() && y < getHeight(); //kanskje endre til if-else pga. validering i getNeighbourTiles
+		return x >= 0 && y >= 0 && x < getWidth() && y < getHeight(); 
 	}
     
     //Hente blokk med xy-koordinatene, bruker isTile. 
@@ -168,7 +165,6 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 		tile.setIsOpen();
 		
 		for(int z = y-1; z <= y+1; z++) { //sjekker over og under
-		
 			if (!isTile(x,z)) {
 				z++;
 			}
@@ -183,8 +179,7 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 				}
 				else if(tile2.getType() == 'e') {
 					tile2.setIsOpen();
-				}
-				
+				}	
 			}
 		}
 		for(int w = x-1; w <= x+1; w++) { //sjekker høyre og venstre
@@ -215,8 +210,7 @@ public class MineSweeper { //implementerer grensesnitt for lagring
 				boardString += getTile(x, y).toString(); //skriver ut brett :)
 				}
 			boardString += "\n";
-			}
-			
+			}	
 
 		if (isGameWon) {
 			boardString += "\n\nGame won!";
